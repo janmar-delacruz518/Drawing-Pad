@@ -9,7 +9,7 @@ pygame.display.set_caption("Drawing Pad")
 
 # Colors
 WHITE = (255, 255, 255)
-# BLACK = (0, 0, 0)
+BLACK = (0, 0, 0)
 RED = 0
 GREEN = 0
 BLUE = 0
@@ -23,8 +23,23 @@ last_pos = None         # None - NoneType value
 brush_size = 5
 brush_color = (RED, GREEN, BLUE)
 
-# frame limiting for stability
+# Frame limiting for stability
 clock = pygame.time.Clock()
+
+# Monitoring Icons
+circle_pos = 535
+pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+pygame.draw.rect(screen, (223, 197, 123), (470, 95, 121, 32))
+
+# Screen Texts
+font = pygame.font.SysFont(None, 18)
+
+rgb_text = font.render(f"RGB: {RED}, {GREEN}, {BLUE}", True, (RED, GREEN, BLUE))
+screen.blit(rgb_text, (475, 100))
+
+brush_size_text = font.render(f"BRUSH SIZE: {brush_size}", True, (brush_size))
+screen.blit(brush_size_text, (475, 112))
+
 
 run = True                                                                              # Main Loop for running the screen/window
 while run:
@@ -64,14 +79,25 @@ while run:
                 BLUE = min(255, BLUE + 32)
             elif keys[K_b] and event.key == K_LEFT:
                 BLUE = max(0, BLUE - 32)
-
-            brush_color = (RED, GREEN, BLUE)
             
             # Brush size adjustment
+
             if event.key == K_UP:
                 brush_size += 1
+                pygame.draw.circle(screen, WHITE, (circle_pos, 50), brush_size)
+                pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
             elif event.key == K_DOWN:
                 brush_size = max(1, brush_size - 1) # smallest size limit 1
+                pygame.draw.circle(screen, WHITE, (circle_pos, 50), brush_size + 1)
+                pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+
+            brush_color = (RED, GREEN, BLUE)
+            pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+            pygame.draw.rect(screen, (223, 197, 123), (470, 95, 121, 32))
+            rgb_text = font.render(f"RGB: {RED}, {GREEN}, {BLUE}", True, (0, 0, 0))
+            screen.blit(rgb_text, (475, 100))
+            brush_size_text = font.render(f"BRUSH SIZE: {brush_size}", True, (brush_size))
+            screen.blit(brush_size_text, (475, 112))
 
     if drawing and pygame.mouse.get_pressed()[0]:    # .mouse.get_pressed()[0] left mouse click
 
@@ -95,7 +121,7 @@ while run:
                 x = int(x1 + float(i) / distance * dx)
                 y = int(y1 + float(i) / distance * dy)
                 # pygame.draw.rect(screen, brush_color, (x, y, brush_size, brush_size))
-                pygame.draw.circle(screen, brush_color, (x, y,), brush_size)
+                pygame.draw.circle(screen, brush_color, (x, y), brush_size)
                 
         last_pos = mouse_pos
 
@@ -104,8 +130,24 @@ while run:
 
 pygame.quit()                                                                           # Autotype for good habit
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # POSSIBLE IMPROVEMENTS
 # 1. modify/improve cursor and pen position
 #     - bigger line weight shows that upon drawing, the point(or shape) starts/points 
 #       from the topleft corner of the pen
 """ FIXED, USED CIRCLE TO DRAW INSTEAD OF RECTANGLE """
+# 2. Full Screen Button/switch
+# 3. Point monitor for brush color and brush size
