@@ -8,8 +8,11 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Drawing Pad")
 
 # Colors
-BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+# BLACK = (0, 0, 0)
+RED = 0
+GREEN = 0
+BLUE = 0
 
 # Screen Default
 screen.fill(WHITE)
@@ -18,7 +21,7 @@ screen.fill(WHITE)
 drawing = False         # main event/interaction of the game
 last_pos = None         # None - NoneType value
 brush_size = 5
-brush_color = (0)
+brush_color = (RED, GREEN, BLUE)
 
 # frame limiting for stability
 clock = pygame.time.Clock()
@@ -46,21 +49,29 @@ while run:
         if event.type == KEYDOWN:
 
             # Brush Color Choices
-            if event.key == K_r:        # Red
-                brush_color = (255, 0, 0)
-            elif event.key == K_g:      # Green
-                brush_color = (0, 255, 0)
-            elif event.key == K_b:      # Blue
-                brush_color = (0, 0, 255)
-            elif event.key == K_0:      # Black
-                brush_color = BLACK
+            keys = pygame.key.get_pressed()
+            if keys[K_r] and event.key == K_RIGHT:        # Red    # Added RGB Adjuster       
+                RED = min(255, RED + 32)
+            elif keys[K_r] and event.key == K_LEFT:
+                RED = max(0, RED - 32)
+
+            if keys[K_g] and event.key == K_RIGHT:        # Green  # Added RGB Adjuster
+                GREEN = min(255, GREEN + 32)
+            elif keys[K_g] and event.key == K_LEFT:
+                GREEN = max(0, GREEN - 32)
+
+            if keys[K_b] and event.key == K_RIGHT:        # Blue   # Added RGB Adjuster
+                BLUE = min(255, BLUE + 32)
+            elif keys[K_b] and event.key == K_LEFT:
+                BLUE = max(0, BLUE - 32)
+
+            brush_color = (RED, GREEN, BLUE)
             
             # Brush size adjustment
             if event.key == K_UP:
                 brush_size += 1
             elif event.key == K_DOWN:
-                if brush_size != 1:     # smallest size limit
-                    brush_size -= 1
+                brush_size = max(1, brush_size - 1) # smallest size limit 1
 
     if drawing and pygame.mouse.get_pressed()[0]:    # .mouse.get_pressed()[0] left mouse click
 
