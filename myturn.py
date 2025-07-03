@@ -27,8 +27,9 @@ brush_color = (RED, GREEN, BLUE)
 clock = pygame.time.Clock()
 
 # Monitoring Icons
-circle_pos = 535
-pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+circle_posX = 535
+circle_posY = 47
+pygame.draw.circle(screen, brush_color, (circle_posX, circle_posY), brush_size)
 pygame.draw.rect(screen, (223, 197, 123), (470, 95, 121, 32))
 
 # Screen Texts
@@ -40,9 +41,16 @@ screen.blit(rgb_text, (475, 100))
 brush_size_text = font.render(f"BRUSH SIZE: {brush_size}", True, (brush_size))
 screen.blit(brush_size_text, (475, 112))
 
-
 run = True                                                                              # Main Loop for running the screen/window
 while run:
+
+    pygame.draw.rect(screen, WHITE, (470, 0, 130, 127))
+    pygame.draw.rect(screen, (223, 197, 123), (470, 95, 130, 32))
+    pygame.draw.circle(screen, brush_color, (circle_posX, circle_posY), brush_size)
+    screen.blit(rgb_text, (475, 100))
+
+    brush_size_text = font.render(f"BRUSH SIZE: {brush_size}", True, (brush_size))
+    screen.blit(brush_size_text, (475, 112))
 
     for event in pygame.event.get():
 
@@ -83,16 +91,16 @@ while run:
             # Brush size adjustment
 
             if event.key == K_UP:
-                brush_size += 1
-                pygame.draw.circle(screen, WHITE, (circle_pos, 50), brush_size)
-                pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+                brush_size = min(47, brush_size + 1)
+                pygame.draw.circle(screen, WHITE, (circle_posX, circle_posY), brush_size)
+                pygame.draw.circle(screen, brush_color, (circle_posX, circle_posY), brush_size)
             elif event.key == K_DOWN:
                 brush_size = max(1, brush_size - 1) # smallest size limit 1
-                pygame.draw.circle(screen, WHITE, (circle_pos, 50), brush_size + 1)
-                pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+                pygame.draw.circle(screen, WHITE, (circle_posX, circle_posY), brush_size + 1)
+                pygame.draw.circle(screen, brush_color, (circle_posX, circle_posY), brush_size)
 
             brush_color = (RED, GREEN, BLUE)
-            pygame.draw.circle(screen, brush_color, (circle_pos, 50), brush_size)
+            pygame.draw.circle(screen, brush_color, (circle_posX, circle_posY), brush_size)
             pygame.draw.rect(screen, (223, 197, 123), (470, 95, 121, 32))
             rgb_text = font.render(f"RGB: {RED}, {GREEN}, {BLUE}", True, (0, 0, 0))
             screen.blit(rgb_text, (475, 100))
@@ -115,9 +123,7 @@ while run:
             dx = x2 - x1
             dy = y2 - y1
             distance = max(abs(dx), abs(dy))
-
             for i in range(distance):
-
                 x = int(x1 + float(i) / distance * dx)
                 y = int(y1 + float(i) / distance * dy)
                 # pygame.draw.rect(screen, brush_color, (x, y, brush_size, brush_size))
