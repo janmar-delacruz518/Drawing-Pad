@@ -16,7 +16,7 @@ drawing = False
 last_pos = None
 brush_size = 10
 
-clock = pygame.time.Clock()
+# clock = pygame.time.Clock()
 
 run = True
 while run:
@@ -49,11 +49,12 @@ while run:
             for i in range(distance):
                 x = int(x1 + float(i) / distance * dx)
                 y = int(y1 + float(i) / distance * dy)
-                pygame.draw.rect(screen, BLACK, (x, y, brush_size, brush_size))
+                # pygame.draw.rect(screen, BLACK, (x, y, brush_size, brush_size))
+                pygame.draw.circle(screen, BLACK, (x, y,), brush_size)
 
         last_pos = mouse_pos
 
     pygame.display.update()
-    clock.tick(60)
+    # clock.tick(60)
 
 pygame.quit()

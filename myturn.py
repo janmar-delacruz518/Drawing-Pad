@@ -11,7 +11,7 @@ pygame.display.set_caption("Drawing Pad")
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-# Screen fill(for screen reset) # OPTIONAL FOR VARIABLE DECLARATION
+# Screen Default
 screen.fill(WHITE)
 
 # Variables for event
@@ -83,7 +83,8 @@ while run:
 
                 x = int(x1 + float(i) / distance * dx)
                 y = int(y1 + float(i) / distance * dy)
-                pygame.draw.rect(screen, brush_color, (x, y, brush_size, brush_size))
+                # pygame.draw.rect(screen, brush_color, (x, y, brush_size, brush_size))
+                pygame.draw.circle(screen, brush_color, (x, y,), brush_size)
                 
         last_pos = mouse_pos
 
@@ -96,3 +97,4 @@ pygame.quit()                                                                   
 # 1. modify/improve cursor and pen position
 #     - bigger line weight shows that upon drawing, the point(or shape) starts/points 
 #       from the topleft corner of the pen
+""" FIXED, USED CIRCLE TO DRAW INSTEAD OF RECTANGLE """
