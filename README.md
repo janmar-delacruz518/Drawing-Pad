@@ -38,7 +38,6 @@ python drawing_pad.py
 
 ## 📁 File Structure
 
-```
 drawing_pad/
 │
 ├── drawing_pad.py      # Main application code
