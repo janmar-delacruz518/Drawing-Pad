@@ -35,17 +35,6 @@ pip install pygame
 ### Run the Drawing Pad
 ```bash
 python drawing_pad.py
-```
-
----
-
-## 📷 Screenshots
-
-![screenshot-placeholder](https://via.placeholder.com/600x300.png?text=Your+Screenshot+Here)
-
-> *You can update this section with screenshots of your app in action.*
-
----
 
 ## 📁 File Structure
 
